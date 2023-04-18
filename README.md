@@ -38,4 +38,5 @@ Then we run CTSM using using the perturbed parameters, run mizuRoute to generate
 Finally, we use this script "examine_optimization_results.ipynb" to examine the optimization results. Please remember to unzip "workflow.tar.gz" and "sm_metric.tar.gz" in "./data" folder for practice purposes.
 
 
-
+# Contact Information
+Please reach out to Yifan Cheng @yifanc@ucar.edu if you have any questions concerning the workflow.
