@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -A UCUB0089
+#PBS -q regular
+#PBS -N route.test 
+#PBS -l walltime=1:00:00
+#PBS -o ./log/ 
+#PBS -e ./log/ 
+#PBS -l select=1:ncpus=1:mpiprocs=1
+
+source activate py3
+
+route_control_dir="./workflow/routing/control/control/"
+post_process_dir="./workflow/surrogate_model/script_metrics/"
+
+for control_file in `cat ${CONTROL_FILE_SUM}`; do
+    /glade/work/yifanc/code/mizuRoute/route/bin/route_runoff.v1.2.exe ${route_control_dir}${control_file} 
+#    echo ${route_control_dir}${control_file} >> /glade/work/yifanc/NNA/optmz/routing/control/control/junk.csv
+done
+
+python ${post_process_dir}objective_flow_metrics.py ${JOB_FILE} ${METRIC_OUTPUT_DIR} ${FLOW_DIR} ${MAPPING_FILE} 
+python ${post_process_dir}objective_swe_metrics.py ${JOB_FILE} ${METRIC_OUTPUT_DIR} ${SWE_DIR} ${HRU_SHP} ${SIM_DOMAIN_FILE}
